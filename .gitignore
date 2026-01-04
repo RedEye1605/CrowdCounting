@@ -18,15 +18,6 @@ env/
 .DS_Store
 Thumbs.db
 
-# Logs
-*.log
-logs/
-
-# Temporary
-*.tmp
-*.temp
-
-# Build artifacts
-dist/
-build/
-*.egg-info/
+# Jupyter
+.ipynb_checkpoints/
+# *.ipynb (Commented out to allow notebooks in Git, but ignored in Docker via .dockerignore)

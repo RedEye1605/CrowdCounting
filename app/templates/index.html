@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrowdVision | AI-Powered Crowd Analytics</title>
+    <meta name="description"
+        content="Professional crowd counting solution using advanced deep learning. Analyze crowd density with precision.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">
+                <img src="/static/images/logoCrowd.png" alt="CrowdVision" class="nav-logo">
+                <span class="nav-title">CrowdVision</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#how-it-works" class="nav-link">How it Works</a>
+                <a href="#demo" class="nav-link nav-link-primary">Try Demo</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i data-lucide="sparkles" class="badge-icon"></i>
+                    <span>AI-Powered Analysis</span>
+                </div>
+                <h1 class="hero-title">
+                    Intelligent <span class="text-gradient">Crowd Counting</span> Made Simple
+                </h1>
+                <p class="hero-subtitle">
+                    Harness the power of deep learning to accurately count and analyze crowds in any image.
+                    Built for researchers, event managers, and urban planners.
+                </p>
+                <div class="hero-actions">
+                    <a href="#demo" class="btn btn-primary">
+                        <i data-lucide="play-circle"></i>
+                        Start Analysis
+                    </a>
+                    <a href="#features" class="btn btn-secondary">
+                        <i data-lucide="info"></i>
+                        Learn More
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">98.5%</span>
+                        <span class="stat-label">Accuracy Rate</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number">&lt;2s</span>
+                        <span class="stat-label">Processing Time</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-number">2</span>
+                        <span class="stat-label">AI Models</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="hero-card">
+                    <div class="hero-card-header">
+                        <div class="card-dots">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <span class="card-title">Analysis Preview</span>
+                    </div>
+                    <div class="hero-card-body">
+                        <div class="preview-placeholder">
+                            <i data-lucide="users" class="preview-icon"></i>
+                            <p>Upload an image to see the magic</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-bg-pattern"></div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Features</span>
+                <h2 class="section-title">Two Powerful Analysis Methods</h2>
+                <p class="section-subtitle">Choose the approach that best fits your needs</p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon-wrapper">
+                        <i data-lucide="layers" class="feature-icon"></i>
+                    </div>
+                    <h3 class="feature-title">Density Map Estimation</h3>
+                    <p class="feature-description">
+                        Generates a heat map visualization showing crowd distribution.
+                        Perfect for understanding crowd flow and identifying hotspots.
+                    </p>
+                    <ul class="feature-list">
+                        <li><i data-lucide="check-circle-2"></i> Visual heat map output</li>
+                        <li><i data-lucide="check-circle-2"></i> CSRNet architecture</li>
+                        <li><i data-lucide="check-circle-2"></i> Best for dense crowds</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card feature-card-highlighted">
+                    <div class="feature-badge">Recommended</div>
+                    <div class="feature-icon-wrapper">
+                        <i data-lucide="scan-eye" class="feature-icon"></i>
+                    </div>
+                    <h3 class="feature-title">Point Localization</h3>
+                    <p class="feature-description">
+                        Detects and marks individual head positions with precise coordinates.
+                        Ideal when you need exact locations of each person.
+                    </p>
+                    <ul class="feature-list">
+                        <li><i data-lucide="check-circle-2"></i> Individual detection</li>
+                        <li><i data-lucide="check-circle-2"></i> P2PNet architecture</li>
+                        <li><i data-lucide="check-circle-2"></i> Coordinate output</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Process</span>
+                <h2 class="section-title">How It Works</h2>
+                <p class="section-subtitle">Three simple steps to accurate crowd analysis</p>
+            </div>
+
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <div class="step-icon-wrapper">
+                        <i data-lucide="upload-cloud" class="step-icon"></i>
+                    </div>
+                    <h3 class="step-title">Upload Image</h3>
+                    <p class="step-description">Drag and drop or browse to upload your crowd image</p>
+                </div>
+
+                <div class="step-connector">
+                    <i data-lucide="chevron-right"></i>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <div class="step-icon-wrapper">
+                        <i data-lucide="settings-2" class="step-icon"></i>
+                    </div>
+                    <h3 class="step-title">Select Method</h3>
+                    <p class="step-description">Choose between density map or point localization</p>
+                </div>
+
+                <div class="step-connector">
+                    <i data-lucide="chevron-right"></i>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <div class="step-icon-wrapper">
+                        <i data-lucide="bar-chart-3" class="step-icon"></i>
+                    </div>
+                    <h3 class="step-title">Get Results</h3>
+                    <p class="step-description">Receive accurate count with visual analysis</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo-section">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">Demo</span>
+                <h2 class="section-title">Try It Now</h2>
+                <p class="section-subtitle">Upload your image and see the results instantly</p>
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-upload-panel">
+                    <!-- Upload Area -->
+                    <div class="upload-wrapper" id="upload-wrapper">
+                        <input type="file" id="file-input" accept="image/*" hidden>
+                        <div class="upload-dropzone" id="upload-dropzone">
+                            <div class="upload-icon-wrapper">
+                                <i data-lucide="image-plus" class="upload-icon"></i>
+                            </div>
+                            <h3 class="upload-title">Drop your image here</h3>
+                            <p class="upload-subtitle">or <span class="upload-link">browse</span> to choose a file</p>
+                            <p class="upload-formats">Supports: JPG, PNG, WEBP (Max 10MB)</p>
+                        </div>
+
+                        <!-- Sample Images Gallery -->
+                        <div class="samples-section">
+                            <div class="samples-divider">
+                                <span class="divider-line"></span>
+                                <span class="divider-text">or try a sample</span>
+                                <span class="divider-line"></span>
+                            </div>
+                            <div class="samples-gallery" id="samples-gallery">
+                                <button class="sample-item" data-sample="/static/samples/1.jpg" title="Sample 1">
+                                    <img src="/static/samples/1.jpg" alt="Sample 1">
+                                    <div class="sample-overlay">
+                                        <i data-lucide="mouse-pointer-click"></i>
+                                    </div>
+                                </button>
+                                <button class="sample-item" data-sample="/static/samples/2.jpg" title="Sample 2">
+                                    <img src="/static/samples/2.jpg" alt="Sample 2">
+                                    <div class="sample-overlay">
+                                        <i data-lucide="mouse-pointer-click"></i>
+                                    </div>
+                                </button>
+                                <button class="sample-item" data-sample="/static/samples/3.jpg" title="Sample 3">
+                                    <img src="/static/samples/3.jpg" alt="Sample 3">
+                                    <div class="sample-overlay">
+                                        <i data-lucide="mouse-pointer-click"></i>
+                                    </div>
+                                </button>
+                                <button class="sample-item" data-sample="/static/samples/4.jpg" title="Sample 4">
+                                    <img src="/static/samples/4.jpg" alt="Sample 4">
+                                    <div class="sample-overlay">
+                                        <i data-lucide="mouse-pointer-click"></i>
+                                    </div>
+                                </button>
+                                <button class="sample-item" data-sample="/static/samples/5.jpg" title="Sample 5">
+                                    <img src="/static/samples/5.jpg" alt="Sample 5">
+                                    <div class="sample-overlay">
+                                        <i data-lucide="mouse-pointer-click"></i>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preview -->
+                    <div class="preview-wrapper" id="preview-wrapper" style="display: none;">
+                        <div class="preview-image-container">
+                            <img id="preview-image" alt="Preview">
+                            <button class="preview-remove-btn" id="btn-remove">
+                                <i data-lucide="x"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Method Selection -->
+                    <div class="method-selector">
+                        <label class="method-label">Analysis Method</label>
+                        <div class="method-options">
+                            <label class="method-option selected" data-method="density">
+                                <input type="radio" name="method" value="density" checked>
+                                <div class="method-radio"></div>
+                                <div class="method-content">
+                                    <i data-lucide="layers" class="method-icon"></i>
+                                    <div class="method-text">
+                                        <span class="method-name">Density Map</span>
+                                        <span class="method-desc">Heat map visualization</span>
+                                    </div>
+                                </div>
+                            </label>
+                            <label class="method-option" data-method="localization">
+                                <input type="radio" name="method" value="localization">
+                                <div class="method-radio"></div>
+                                <div class="method-content">
+                                    <i data-lucide="scan-eye" class="method-icon"></i>
+                                    <div class="method-text">
+                                        <span class="method-name">Point Detection</span>
+                                        <span class="method-desc">Individual locations</span>
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Threshold (for localization) -->
+                    <div class="threshold-wrapper" id="threshold-wrapper" style="display: none;">
+                        <label class="threshold-label">
+                            <span>Detection Confidence</span>
+                            <span class="threshold-value" id="threshold-value">40%</span>
+                        </label>
+                        <input type="range" id="threshold-slider" class="threshold-slider" min="10" max="90" value="40">
+                        <div class="threshold-hints">
+                            <span>More detections</span>
+                            <span>Higher accuracy</span>
+                        </div>
+                    </div>
+
+                    <!-- Analyze Button -->
+                    <button class="analyze-btn" id="btn-analyze" disabled>
+                        <span class="analyze-btn-content">
+                            <i data-lucide="scan"></i>
+                            <span>Analyze Image</span>
+                        </span>
+                        <span class="analyze-btn-loading" style="display: none;">
+                            <span class="loading-spinner"></span>
+                            <span>Processing...</span>
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Results Panel -->
+                <div class="demo-results-panel" id="results-panel" style="display: none;">
+                    <div class="results-header">
+                        <h3 class="results-title">Analysis Results</h3>
+                        <span class="results-method" id="result-method-badge">Density Map</span>
+                    </div>
+
+                    <div class="results-count">
+                        <div class="count-ring">
+                            <svg viewBox="0 0 100 100">
+                                <circle class="count-ring-bg" cx="50" cy="50" r="45" />
+                                <circle class="count-ring-progress" cx="50" cy="50" r="45" />
+                            </svg>
+                            <div class="count-value">
+                                <span class="count-number" id="count-number">0</span>
+                                <span class="count-label">People Detected</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="results-visualization">
+                        <label class="viz-label">Visualization</label>
+                        <div class="viz-image-wrapper">
+                            <img id="result-image" alt="Result">
+                        </div>
+                    </div>
+
+                    <div class="results-actions">
+                        <button class="result-btn result-btn-secondary" id="btn-download">
+                            <i data-lucide="download"></i>
+                            Download
+                        </button>
+                        <button class="result-btn result-btn-primary" id="btn-new">
+                            <i data-lucide="refresh-cw"></i>
+                            New Analysis
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <img src="/static/images/logoCrowd.png" alt="CrowdVision" class="footer-logo">
+                <span>CrowdVision</span>
+            </div>
+            <div class="footer-tech">
+                <span>Powered by</span>
+                <div class="tech-badges">
+                    <span class="tech-badge">CSRNet</span>
+                    <span class="tech-badge">P2PNet</span>
+                    <span class="tech-badge">PyTorch</span>
+                </div>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com" class="footer-link" target="_blank">
+                    <i data-lucide="github"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>

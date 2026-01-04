@@ -1,0 +1,35 @@
+# ============================================
+# Fly.io Configuration for Crowd Counting API
+# ============================================
+
+app = "crowd-counter-api"
+primary_region = "sin"  # Singapore - closest to Indonesia
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "8080"
+  PYTHONUNBUFFERED = "1"
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+  [http_service.concurrency]
+    type = "requests"
+    hard_limit = 25
+    soft_limit = 20
+
+[[vm]]
+  memory = "512mb"
+  cpu_kind = "shared"
+  cpus = 1
+
+# Swap configuration for memory-constrained environments
+[experimental]
+  swap_size_mb = 512

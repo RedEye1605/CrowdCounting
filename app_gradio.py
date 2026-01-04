@@ -115,15 +115,17 @@ def point_nms(points, scores, dist_threshold=8.0):
     return mask
 
 
-def predict_localization(image: Image.Image, threshold: float = 0.4):
+def predict_localization(image: Image.Image, threshold: float = 0.45):
     """Predict crowd count using point localization method."""
     if localization_model is None:
         return None, "Localization model not loaded"
     
-    # Resize to make dimensions divisible by 128
+    # Resize to make dimensions divisible by 32
     w, h = image.size
-    new_w = (w // 128) * 128 if w >= 128 else 128
-    new_h = (h // 128) * 128 if h >= 128 else 128
+    new_w = ((w + 31) // 32) * 32
+    new_h = ((h + 31) // 32) * 32
+    new_w = max(new_w, 128)
+    new_h = max(new_h, 128)
     resized_image = image.resize((new_w, new_h), Image.BILINEAR)
     
     # Preprocess
@@ -149,9 +151,9 @@ def predict_localization(image: Image.Image, threshold: float = 0.4):
     filtered_points = pred_points[0][mask].cpu().numpy()
     filtered_scores = scores[0][mask].cpu().numpy()
     
-    # Apply Point NMS
+    # Apply Point NMS (5% of diagonal - tuned via grid search)
     img_diagonal = np.sqrt(new_w**2 + new_h**2)
-    nms_dist = max(40.0, img_diagonal * 0.08)
+    nms_dist = max(15.0, img_diagonal * 0.05)
     
     if len(filtered_points) > 0:
         nms_mask = point_nms(filtered_points, filtered_scores, dist_threshold=nms_dist)
@@ -239,8 +241,8 @@ with gr.Blocks(
                 label="Analysis Method"
             )
             threshold = gr.Slider(
-                minimum=0.1, maximum=0.9, value=0.4, step=0.05,
-                label="Detection Threshold (for Point Localization)",
+                minimum=0.1, maximum=0.9, value=0.45, step=0.01,
+                label="Detection Confidence Threshold (for Point Localization)",
                 visible=True
             )
             analyze_btn = gr.Button("🔍 Analyze", variant="primary", size="lg")

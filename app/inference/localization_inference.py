@@ -140,7 +140,7 @@ def create_localization_visualization(
     return base64.b64encode(buf.read()).decode('utf-8')
 
 
-def predict_localization(image_bytes: io.BytesIO, model=None, threshold: float = 0.4) -> dict:
+def predict_localization(image_bytes: io.BytesIO, model=None, threshold: float = 0.45) -> dict:
     """
     Run localization inference on an image.
     
@@ -166,10 +166,11 @@ def predict_localization(image_bytes: io.BytesIO, model=None, threshold: float =
         scale = MAX_SIZE / max(w, h)
         w, h = int(w * scale), int(h * scale)
     
-    # Make dimensions divisible by 128 for proper feature map alignment
-    new_w = (w // 128) * 128
-    new_h = (h // 128) * 128
-    new_w = max(new_w, 128)
+    # Make dimensions divisible by 32 for proper feature map alignment
+    # Using 32 instead of 128 preserves more image detail
+    new_w = ((w + 31) // 32) * 32
+    new_h = ((h + 31) // 32) * 32
+    new_w = max(new_w, 128)  # Minimum 128 for proper feature extraction
     new_h = max(new_h, 128)
     
     resized_image = image.resize((new_w, new_h), Image.BILINEAR)
@@ -205,10 +206,9 @@ def predict_localization(image_bytes: io.BytesIO, model=None, threshold: float =
     filtered_scores = scores[0][mask].cpu().numpy()
     
     # Apply Point NMS to remove duplicate/nearby detections
-    # Use distance threshold based on image size (8% of image diagonal - optimized via grid search)
-    # This accounts for typical head spacing in crowd scenes
+    # Use distance threshold based on image size (5% of diagonal - tuned via grid search)
     img_diagonal = np.sqrt(new_w**2 + new_h**2)
-    nms_dist = max(40.0, img_diagonal * 0.08)  # Minimum 40 pixels
+    nms_dist = max(15.0, img_diagonal * 0.05)  # Minimum 15 pixels
     
     if len(filtered_points) > 0:
         nms_mask = point_nms(filtered_points, filtered_scores, dist_threshold=nms_dist)
@@ -216,19 +216,23 @@ def predict_localization(image_bytes: io.BytesIO, model=None, threshold: float =
         filtered_scores = filtered_scores[nms_mask]
     
     # Convert to list of (x, y) tuples and scale back to original image size
+    # Filter out points that are too close to the border (likely model artifacts)
     points = []
+    margin = 3  # pixels
     for i, (x, y) in enumerate(filtered_points):
         # Scale points back to original image size
-        x = x * resize_scale_x
-        y = y * resize_scale_y
-        # Clamp to image bounds
-        x = max(0, min(x, original_size[0]))
-        y = max(0, min(y, original_size[1]))
-        points.append({
-            'x': float(x),
-            'y': float(y),
-            'confidence': float(filtered_scores[i])
-        })
+        scaled_x = x * resize_scale_x
+        scaled_y = y * resize_scale_y
+        
+        # Check if point is within image bounds with a small margin
+        if margin <= scaled_x <= original_size[0] - margin and \
+           margin <= scaled_y <= original_size[1] - margin:
+            points.append({
+                'x': float(scaled_x),
+                'y': float(scaled_y),
+                'confidence': float(filtered_scores[i])
+            })
+
     
     count = len(points)
     

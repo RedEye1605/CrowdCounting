@@ -155,7 +155,7 @@ async def predict_density_endpoint(
 @app.post("/predict/localization")
 async def predict_localization_endpoint(
     file: UploadFile = File(..., description="Image file (JPEG, PNG)"),
-    threshold: float = Query(0.4, ge=0.0, le=1.0, description="Detection confidence threshold")
+    threshold: float = Query(0.45, ge=0.0, le=1.0, description="Detection confidence threshold")
 ):
     """
     Predict crowd count using Point Localization method.

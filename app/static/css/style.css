@@ -1253,8 +1253,11 @@ button {
 
 .footer-logo {
     height: 32px;
-    width: auto;
-    filter: brightness(0) invert(1);
+    width: 32px;
+    border-radius: var(--radius-md);
+    object-fit: contain;
+    background: var(--white);
+    padding: 2px;
 }
 
 .footer-tech {

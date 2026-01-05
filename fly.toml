@@ -2,7 +2,7 @@ app = "crowdcounting-l4w5mw"
 primary_region = "fra"
 
 [build]
-  dockerfile = "Dockerfile.fly"
+  dockerfile = "Dockerfile"
 
 [env]
   PORT = "8080"

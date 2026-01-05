@@ -106,9 +106,15 @@ async def home(request: Request):
 
 @app.get("/health")
 async def health_check():
-    """Health check endpoint for deployment."""
+    """Health check endpoint for deployment.
+    
+    Returns 200 OK as long as the app is running, regardless of model status.
+    This is important for Fly.io to detect the app is alive during slow model loading.
+    """
+    all_models_ready = all(models_loaded.values())
     return {
-        "status": "healthy",
+        "status": "healthy" if all_models_ready else "starting",
+        "ready": all_models_ready,
         "models": models_loaded
     }
 

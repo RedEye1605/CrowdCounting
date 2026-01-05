@@ -8,6 +8,8 @@ Provides REST endpoints for crowd counting using two methods:
 
 import os
 import io
+import asyncio
+import threading
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, File, UploadFile, HTTPException, Query
 from fastapi.staticfiles import StaticFiles
@@ -33,41 +35,68 @@ LOCALIZATION_WEIGHTS = os.path.join(WEIGHTS_DIR, "p2pnet_model.pth")
 
 # Application state
 models_loaded = {"density": False, "localization": False}
+models_loading = {"density": False, "localization": False}
+
+
+def load_models_background():
+    """Load models in background thread to avoid blocking server startup."""
+    import gc
+    global models_loaded, models_loading
+    
+    # Load density model first
+    if os.path.exists(DENSITY_WEIGHTS):
+        try:
+            models_loading["density"] = True
+            print("[Memory] Loading Density Map model...")
+            load_density_model(DENSITY_WEIGHTS, quantize=True)
+            models_loaded["density"] = True
+            print("✅ Density Map model loaded")
+            # Force garbage collection to free memory before loading next model
+            gc.collect()
+        except Exception as e:
+            print(f"❌ Failed to load Density Map model: {e}")
+        finally:
+            models_loading["density"] = False
+    else:
+        print(f"⚠️ Density weights not found: {DENSITY_WEIGHTS}")
+    
+    # Load localization model after density is done
+    if os.path.exists(LOCALIZATION_WEIGHTS):
+        try:
+            models_loading["localization"] = True
+            print("[Memory] Loading Localization model...")
+            load_localization_model(LOCALIZATION_WEIGHTS, quantize=False)
+            models_loaded["localization"] = True
+            print("✅ Localization model loaded")
+            gc.collect()
+        except Exception as e:
+            print(f"❌ Failed to load Localization model: {e}")
+        finally:
+            models_loading["localization"] = False
+    else:
+        print(f"⚠️ Localization weights not found: {LOCALIZATION_WEIGHTS}")
+    
+    print("=" * 50)
+    print("🎉 All models loaded! API fully ready.")
+    print("=" * 50)
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Load models on startup."""
+    """Start server immediately and load models in background."""
     global models_loaded
     
     print("=" * 50)
     print("🚀 Crowd Counting API Starting...")
     print("=" * 50)
+    print("⏳ Loading models in background...")
     
-    # Load density model
-    if os.path.exists(DENSITY_WEIGHTS):
-        try:
-            load_density_model(DENSITY_WEIGHTS, quantize=True)
-            models_loaded["density"] = True
-            print("✅ Density Map model loaded")
-        except Exception as e:
-            print(f"❌ Failed to load Density Map model: {e}")
-    else:
-        print(f"⚠️ Density weights not found: {DENSITY_WEIGHTS}")
+    # Start model loading in background thread
+    # This allows the server to start immediately and respond to health checks
+    loader_thread = threading.Thread(target=load_models_background, daemon=True)
+    loader_thread.start()
     
-    # Load localization model
-    if os.path.exists(LOCALIZATION_WEIGHTS):
-        try:
-            load_localization_model(LOCALIZATION_WEIGHTS, quantize=False)
-            models_loaded["localization"] = True
-            print("✅ Localization model loaded")
-        except Exception as e:
-            print(f"❌ Failed to load Localization model: {e}")
-    else:
-        print(f"⚠️ Localization weights not found: {LOCALIZATION_WEIGHTS}")
-    
-    print("=" * 50)
-    print("🎉 API Ready to serve requests!")
+    print("✅ Server is listening! Models loading in background...")
     print("=" * 50)
     
     yield
@@ -112,10 +141,20 @@ async def health_check():
     This is important for Fly.io to detect the app is alive during slow model loading.
     """
     all_models_ready = all(models_loaded.values())
+    any_loading = any(models_loading.values())
+    
+    if all_models_ready:
+        status = "healthy"
+    elif any_loading:
+        status = "loading_models"
+    else:
+        status = "starting"
+    
     return {
-        "status": "healthy" if all_models_ready else "starting",
+        "status": status,
         "ready": all_models_ready,
-        "models": models_loaded
+        "models": models_loaded,
+        "loading": models_loading
     }
 
 

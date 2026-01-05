@@ -1,7 +1,6 @@
 # CrowdVision - AI Crowd Counting
 
 <div align="center">
-<div align="center">
   <img src="https://github.com/RedEye1605/CrowdCounting/blob/main/app/static/images/logoCrowd.png"
        alt="CrowdVision Logo"
        width="200">

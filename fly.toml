@@ -29,7 +29,7 @@ primary_region = "fra"
   timeout = "30s"
 
 [[vm]]
-  memory = "3gb"
+  memory = "2gb"
   cpu_kind = "shared"
   cpus = 1
 

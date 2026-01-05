@@ -1,6 +1,5 @@
 # ============================================
-# Crowd Counting API - Production Dockerfile
-# Multi-stage build for optimized image size
+# BUILD_ID: 2026-01-05-0710 (Corrected OpenGL)
 # ============================================
 
 # Stage 1: Builder

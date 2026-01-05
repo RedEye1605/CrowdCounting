@@ -6,37 +6,37 @@ app = "crowdcounting-l4w5mw"
 primary_region = "iad"
 
 [build]
-  dockerfile = "Dockerfile"
+dockerfile = "Dockerfile"
 
 [env]
-  PORT = "8080"
-  PYTHONUNBUFFERED = "1"
+PORT = "8080"
+PYTHONUNBUFFERED = "1"
+
+[experimental.attached]
+secrets = { }
 
 [http_service]
-  internal_port = 8080
-  force_https = true
-  auto_stop_machines = 'stop'
-  auto_start_machines = true
-  min_machines_running = 0
-  processes = ["app"]
+auto_start_machines = true
+auto_stop_machines = true
+force_https = true
+internal_port = 8_080
+min_machines_running = 0
+processes = [ "app" ]
 
-[http_service.concurrency]
-  type = "connections"
-  hard_limit = 25
-  soft_limit = 20
-
-[[http_service.checks]]
-  grace_period = "300s"
+  [[http_service.checks]]
+  grace_period = "5m0s"
   interval = "30s"
   method = "GET"
   path = "/health"
   timeout = "30s"
 
-[[vm]]
-  memory = "4gb"
-  cpu_kind = "performance"
-  cpus = 1
-  memory_mb = 1024
+  [http_service.concurrency]
+  hard_limit = 25
+  soft_limit = 20
+  type = "connections"
 
-[experimental]
-  swap_size_mb = 1024
+[[vm]]
+cpu_kind = "performance"
+cpus = 1
+memory = "4gb"
+memory_mb = 1_024

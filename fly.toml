@@ -1,9 +1,7 @@
-# ============================================
-# Fly.io Configuration for Crowd Counting API
-# ============================================
+# fly.toml app configuration file for crowdcounting-l4w5mw
 
-app = "crowd-counter-api"
-primary_region = "sin"  # Singapore - closest to Indonesia
+app = "crowdcounting-l4w5mw"
+primary_region = "fra"
 
 [build]
   dockerfile = "Dockerfile"
@@ -20,16 +18,10 @@ primary_region = "sin"  # Singapore - closest to Indonesia
   min_machines_running = 0
   processes = ["app"]
 
-  [http_service.concurrency]
-    type = "requests"
-    hard_limit = 25
-    soft_limit = 20
-
 [[vm]]
-  memory = "512mb"
+  memory = "1gb"
   cpu_kind = "shared"
   cpus = 1
 
-# Swap configuration for memory-constrained environments
 [experimental]
-  swap_size_mb = 512
+  swap_size_mb = 1024

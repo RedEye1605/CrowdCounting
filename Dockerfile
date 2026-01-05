@@ -25,7 +25,7 @@ FROM python:3.10-slim
 WORKDIR /app
 
 # Install runtime dependencies
-# Note: libgl1 replaces the obsolete libgl1-mesa-glx for newer Debian versions
+# libgl1 menggantikan libgl1-mesa-glx yang sudah usang di Debian terbaru (Trixie)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libgl1 \
     libglib2.0-0 \

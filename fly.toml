@@ -1,5 +1,3 @@
-# fly.toml app configuration file for crowdcounting-l4w5mw
-
 app = "crowdcounting-l4w5mw"
 primary_region = "fra"
 

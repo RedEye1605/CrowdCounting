@@ -1,9 +1,10 @@
-# fly.toml app configuration file generated for crowdcounting-l4w5mw on 2026-01-05T19:13:39Z
+# fly.toml app configuration file generated for crowdcounting-l4w5mw on 2026-01-05T20:12:35Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
 
 app = 'crowdcounting-l4w5mw'
-primary_region = 'iad'
+primary_region = 'fra'
 
 [build]
 

@@ -36,7 +36,7 @@ primary_region = "iad"
   memory = "4gb"
   cpu_kind = "performance"
   cpus = 1
-  memory_mb = 2024
+  memory_mb = 4096
 
 [experimental]
   swap_size_mb = 1024
